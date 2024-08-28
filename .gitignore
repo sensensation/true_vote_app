@@ -1,0 +1,74 @@
+# Основные файлы и папки Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Логи и отладочная информация
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+*.sqlite
+
+# Папки среды виртуального окружения
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Настройки IDE и редакторов
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Конфигурационные файлы системы
+.DS_Store
+Thumbs.db
+
+# Файлы для работы с Docker
+*.env
+docker-compose.override.yml
+
+# Виртуальные окружения (Pipenv, Poetry)
+.Python
+Pipfile.lock
+poetry.lock
+
+# Кеши и временные файлы
+*.egg-info/
+.eggs/
+.cache/
+.tox/
+.coverage
+*.cover
+.hypothesis/
+dist/
+build/
+site/
+
+# Файлы тестирования
+.pytest_cache/
+htmlcov/
+demos/
+
+# Pyre - статический анализатор типов для Python
+.pyre/
+
+# Pytype - статический анализатор типов для Python
+.pytype/
+
+# MyPy - статический анализатор типов для Python
+.mypy_cache/
+
+# Пакеты и зависимости Python
+*.egg
+*.wheel
+pip-log.txt
+
+# Celery файлы
+celerybeat-schedule
