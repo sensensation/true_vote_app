@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  template:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: echo "Some command, but its a template"
+    env_file:
+      - .env_defaults
+      - .env
+    volumes:
+      - ./src:/app/code
+      - ./shared:/app/shared
+      - ./shared/logs:/app/shared/logs
+
+  app:
+    container_name: trust_vote_app
+    extends:
+      service: template
+    entrypoint: /app/entrypoint.sh
+    ports:
+      - "8200:8200"
+      - "5678:5678" # port for the debugger
+    environment:
+      - PTVSD_ENABLE=1
+      - PYTHONPATH=/app/code
+    volumes:
+      - ./src:/app/code
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=trust_vote_db
+    volumes:
+      - trust_vote_db:/var/lib/postgresql/data
+    ports:
+      - "8201:5432"
+
+volumes:
+   trust_vote_db:

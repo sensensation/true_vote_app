@@ -5,10 +5,10 @@ from pydantic import Field, PostgresDsn
 
 class APISettings(BaseSettings):
     PUBLIC_PREFIX: str = "/api/payments"
-    INTERNAL_PREFIX: str = "/api/payments/internal"
-    ADMIN_PREFIX: str = "/api/payments/admin"
-    TRUSTED_PREFIX: str = "/api/payments/trusted"
-    TEST_PREFIX: str = "/api/payments/test"
+    INTERNAL_PREFIX: str = "/api/internal"
+    ADMIN_PREFIX: str = "/api/admin"
+    TRUSTED_PREFIX: str = "/api/trusted"
+    TEST_PREFIX: str = "/api/test"
     DOCS_ENABLED: bool = True
     DOCS_VERSION: str = Field("unknown", validation_alias="VERSION")
     TEST_ENABLED: bool = False
@@ -43,6 +43,10 @@ class UvicornSettings(BaseSettings):
     log_level: str = "info"
     reload: bool = True
     limit_max_requests: Optional[int] = None
+
+
+class CacheSettings(BaseSettings):
+    TTL: int = 300
 
 
 class Settings(BaseSettings):
