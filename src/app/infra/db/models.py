@@ -29,7 +29,7 @@ class UserORM(Base):
 
     __table_args__ = (
         UniqueConstraint("email", name="uq_users_email"),
-        UniqueConstraint("username", name="uq_users_username"),
+        UniqueConstraint("user_name", name="uq_users_username"),
     )
 
 

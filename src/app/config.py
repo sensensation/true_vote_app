@@ -1,6 +1,6 @@
 from typing import Any, Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field, PostgresDsn
+from pydantic import BaseModel, Field, PostgresDsn
 
 
 class APISettings(BaseSettings):
@@ -29,6 +29,47 @@ class DatabaseSettings(BaseSettings):
     SERVER_SETTINGS: dict[str, Any] = {}
     CONNECT_ARGS: dict[str, Any] = {}
 
+    model_config = SettingsConfigDict(
+        env_prefix="DB__",
+        env_file=".env",
+        extra="ignore",
+    )
+
+
+class AlembicSettings(BaseSettings):
+
+    model_config = SettingsConfigDict(
+        env_prefix="ALEMBIC__",
+        env_file=".env",
+        extra="ignore",
+    )
+
+    MIGRATION_TIMEOUT: int | float | None = 30
+
+class KafkaSettings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_prefix="KAFKA__",
+        env_file=".env",
+        extra="ignore",
+    )
+
+    ENABLED: bool = True
+    BROKER: str
+    TOPIC: str | None = None
+    NAME: str
+    DEBUG: bool = False
+    PRODUCER_ONLY: bool = False
+    PRODUCER_REQUEST_TIMEOUT: int = 60
+    PRODUCER_LINGER: float = 0.5
+
+
+class KafkaProducerSettings(KafkaSettings):
+    class VotesSaverConfig(BaseModel):
+        topic: str = "votes_saver"
+        model_config = SettingsConfigDict(env_prefix="KAFKA__VOTES_SAVES", env_file=".env")
+
+    votes_saver: VotesSaverConfig = VotesSaverConfig()
+
 
 class UvicornSettings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -50,8 +91,10 @@ class CacheSettings(BaseSettings):
 
 
 class Settings(BaseSettings):
-    DB: DatabaseSettings = DatabaseSettings(APP_NAME="VoteApp")
+    DB: DatabaseSettings = DatabaseSettings()
     API: APISettings = APISettings()
+
+    KAFKA: KafkaProducerSettings
 
 
 settings = Settings()

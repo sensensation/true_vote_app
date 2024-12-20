@@ -15,4 +15,4 @@ async def retrieve_vote_v1(
     vote_id: UUID,
     service: RetrieveVoteService = Depends(Provide[Container.retrieve_vote_service]),
 ) -> VoteOutputDTO:
-    ...
+    pass

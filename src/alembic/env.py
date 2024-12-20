@@ -2,11 +2,11 @@ import asyncio
 from logging.config import fileConfig
 
 from alembic import context
-from app.config import DatabaseSettings, settings
+from app.config import AlembicSettings, settings
 from app.infra.db.connection import long_operation_db
 from app.infra.db.models import metadata
 
-alembic_settings = DatabaseSettings()
+alembic_settings = AlembicSettings()
 
 config = context.config
 

@@ -1,9 +1,9 @@
 from logging import getLogger
 from uuid import UUID
 
-from app.app_layer.interfaces.services.vote.dto import VoteOutputDTO
-from app.app_layer.interfaces.services.vote.service import AbstractRetrieveVoteService
 from app.app_layer.interfaces.unit_of_work.uow import AbcUnitOfWork
+from app.app_layer.interfaces.services.votes.dto import VoteOutputDTO
+from app.app_layer.interfaces.services.votes.service import AbstractRetrieveVoteService
 
 
 logger = getLogger(__name__)
@@ -16,4 +16,5 @@ class RetrieveVoteService(AbstractRetrieveVoteService):
     ) -> None:
         self._uow = uow
 
-    async def process(self, vote_id: UUID) -> VoteOutputDTO: ...
+    async def process(self, vote_id: UUID) -> VoteOutputDTO:
+        pass

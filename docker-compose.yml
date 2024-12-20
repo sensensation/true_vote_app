@@ -18,13 +18,12 @@ services:
     container_name: trust_vote_app
     extends:
       service: template
-    entrypoint: /app/entrypoint.sh
+    command: sh -c "alembic upgrade head && python manage.py run-server"
+    environment:
+      - PYTHONPATH=/app/code/
     ports:
       - "8200:8200"
       - "5678:5678" # port for the debugger
-    environment:
-      - PTVSD_ENABLE=1
-      - PYTHONPATH=/app/code
     volumes:
       - ./src:/app/code
     depends_on:

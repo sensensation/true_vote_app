@@ -65,3 +65,5 @@ class AlchemyDatabase:
 
 
 db = AlchemyDatabase(settings.DB)
+
+long_operation_db = AlchemyDatabase(settings.DB.model_copy(update={"CONNECTION_TIMEOUT": 600, "COMMAND_TIMEOUT": 600}))
