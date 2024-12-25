@@ -29,7 +29,6 @@ class AbstractCache(ABC):
         pass
 
 
-
 class RedisCache(AbstractCache):
     def __init__(self) -> None:
         self.client: RedisClient = redis

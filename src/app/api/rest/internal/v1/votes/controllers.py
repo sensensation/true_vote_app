@@ -1,9 +1,10 @@
 from uuid import UUID
+
 from dependency_injector.wiring import Provide, inject
 from fastapi import APIRouter, Depends
 
 from app.app_layer.interfaces.services.votes.dto import VoteOutputDTO
-from app.app_layer.services.votes.vote_retrieve import RetrieveVoteService
+from app.app_layer.services.vote_retrieve.service import RetrieveVoteService
 from app.containers import Container
 
 router = APIRouter()

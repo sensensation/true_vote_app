@@ -2,14 +2,9 @@ from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
 import orjson
-from app.config import DatabaseSettings, settings
-from sqlalchemy.ext.asyncio import (
-    AsyncEngine,
-    AsyncSession,
-    async_sessionmaker,
-    create_async_engine,
-)
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker, create_async_engine
 
+from app.config import DatabaseSettings, settings
 from app.infra.db.utils import orjson_dumper
 
 
@@ -36,9 +31,7 @@ class AlchemyDatabase:
             json_serializer=orjson_dumper,
             json_deserializer=orjson.loads,
         )
-        self._session_factory = async_sessionmaker(
-            bind=self._engine, expire_on_commit=False
-        )
+        self._session_factory = async_sessionmaker(bind=self._engine, expire_on_commit=False)
 
     @property
     def engine(self) -> AsyncEngine:

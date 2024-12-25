@@ -5,6 +5,7 @@ from sqlalchemy import Boolean, ForeignKey, Index, Integer, MetaData, String
 from sqlalchemy.dialects.postgresql import JSONB as DEFAULT_JSONB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy.schema import UniqueConstraint
+
 from app.domain.votes.enums import DeviceTypeEnum, VoteStatusEnum
 from app.infra.db.mixins import TimeMixin
 
@@ -37,26 +38,13 @@ class OptionORM(Base):
     __tablename__ = "options"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    description: Mapped[str] = mapped_column(
-        String(255), 
-        nullable=False, 
-        comment="Описание варианта голосования"
-    )
+    description: Mapped[str] = mapped_column(String(255), nullable=False, comment="Описание варианта голосования")
     is_active: Mapped[bool] = mapped_column(
-        Boolean, 
-        default=True, 
-        nullable=False, 
-        comment="Активен ли вариант голосования"
+        Boolean, default=True, nullable=False, comment="Активен ли вариант голосования"
     )
-    meta: Mapped[Any] = mapped_column(
-        DEFAULT_JSONB, 
-        nullable=True, 
-        comment="Дополнительные метаданные о варианте"
-    )
+    meta: Mapped[Any] = mapped_column(DEFAULT_JSONB, nullable=True, comment="Дополнительные метаданные о варианте")
 
-    __table_args__ = (
-        Index("ix_options_description", "description"),
-    )
+    __table_args__ = (Index("ix_options_description", "description"),)
 
 
 class VoteORM(Base, TimeMixin):

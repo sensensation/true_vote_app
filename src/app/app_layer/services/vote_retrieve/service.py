@@ -4,7 +4,6 @@ from app.app_layer.interfaces.services.votes.dto import VoteOutputDTO
 from app.app_layer.interfaces.services.votes.service import AbstractRetrieveVoteService
 from app.app_layer.interfaces.unit_of_work.uow import AbcUnitOfWork
 
-
 logger = getLogger(__name__)
 
 

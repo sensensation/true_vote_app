@@ -1,8 +1,9 @@
 import asyncio
 from functools import wraps
 from typing import Awaitable, Callable, ParamSpec, TypeVar
-from typer import Typer
+
 import uvicorn
+from typer import Typer
 
 from app.config import UvicornSettings
 from app.containers import Container
@@ -11,6 +12,7 @@ T = TypeVar("T")
 P = ParamSpec("P")  # noqa: VNE001
 
 app = Typer()
+
 
 def coro(func: Callable[P, Awaitable[T]]) -> Callable[P, T]:
     """
@@ -32,11 +34,13 @@ def run_server() -> None:
     uvicorn_settings = UvicornSettings()
     uvicorn.run(**uvicorn_settings.dict())
 
+
 @app.command(help="Description of custom command")
 @coro
 async def example_command() -> None:
     # some code
     pass
+
 
 if __name__ == "__main__":
     container = Container()

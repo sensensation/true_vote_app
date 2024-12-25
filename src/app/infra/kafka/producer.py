@@ -1,11 +1,17 @@
 from logging import getLogger
 
 from pydantic import BaseModel
+
+from app.app_layer.interfaces.kafka.exceptions import (
+    KafkaConnectionException,
+    KafkaException,
+    KafkaProducerError,
+    KafkaTopicException,
+)
+from app.app_layer.interfaces.kafka.producer import AbstractKafkaProducer
+from app.app_layer.interfaces.kafka.schemas import VotesKafkaRequest
 from app.config import KafkaSettings, settings
-from app_layer.interfaces.kafka.exceptions import KafkaConnectionException, KafkaException, KafkaProducerError, KafkaTopicException
-from app_layer.interfaces.kafka.producer import AbstractKafkaProducer
-from app_layer.interfaces.kafka.schemas import VotesKafkaRequest
-from infra.db.utils import model_dump
+from app.infra.db.utils import model_dump
 
 logger = getLogger(__name__)
 
@@ -117,9 +123,15 @@ class Producer:
             raise KafkaException from err
 
 
-
-
 class KafkaProducer(Producer, AbstractKafkaProducer):
+    async def init(self) -> None:
+        logger.info("KafkaProducer.init() called!")
+        await self.startup()
+
+    async def shutdown(self) -> None:
+        logger.info("KafkaProducer.shutdown() called!")
+        await super().shutdown()
+
     async def send_vote_request(self, message: VotesKafkaRequest) -> None:
         topic = settings.KAFKA.votes_saver.topic
         await self._send_message(message, topic)

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from app_layer.interfaces.kafka.schemas import VotesKafkaRequest
+from app.app_layer.interfaces.kafka.schemas import VotesKafkaRequest
 
 
 class AbstractKafkaProducer(ABC):

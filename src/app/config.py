@@ -1,10 +1,11 @@
 from typing import Any, Optional
-from pydantic_settings import BaseSettings, SettingsConfigDict
+
 from pydantic import BaseModel, Field, PostgresDsn
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class APISettings(BaseSettings):
-    PUBLIC_PREFIX: str = "/api/payments"
+    PUBLIC_PREFIX: str = "/api/vote_app"
     INTERNAL_PREFIX: str = "/api/internal"
     ADMIN_PREFIX: str = "/api/admin"
     TRUSTED_PREFIX: str = "/api/trusted"
@@ -13,9 +14,7 @@ class APISettings(BaseSettings):
     DOCS_VERSION: str = Field("unknown", validation_alias="VERSION")
     TEST_ENABLED: bool = False
 
-    model_config = SettingsConfigDict(
-        env_prefix="API__", env_file=".env", extra="ignore"
-    )
+    model_config = SettingsConfigDict(env_prefix="API__", env_file=".env", extra="ignore")
 
 
 class DatabaseSettings(BaseSettings):
@@ -37,7 +36,6 @@ class DatabaseSettings(BaseSettings):
 
 
 class AlembicSettings(BaseSettings):
-
     model_config = SettingsConfigDict(
         env_prefix="ALEMBIC__",
         env_file=".env",
@@ -45,6 +43,7 @@ class AlembicSettings(BaseSettings):
     )
 
     MIGRATION_TIMEOUT: int | float | None = 30
+
 
 class KafkaSettings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -61,6 +60,13 @@ class KafkaSettings(BaseSettings):
     PRODUCER_ONLY: bool = False
     PRODUCER_REQUEST_TIMEOUT: int = 60
     PRODUCER_LINGER: float = 0.5
+
+
+class CoindeskSettings(BaseSettings):
+    BASE_URL: str
+    HTTP_TIMEOUT: int = 10
+
+    model_config = SettingsConfigDict(env_prefix="COINDESK__", env_file=".env", extra="ignore")
 
 
 class KafkaProducerSettings(KafkaSettings):
@@ -80,7 +86,7 @@ class UvicornSettings(BaseSettings):
 
     app: str = "app.main:app"
     host: str = "0.0.0.0"  # nosec
-    port: int = 5000
+    port: int = 8200
     log_level: str = "info"
     reload: bool = True
     limit_max_requests: Optional[int] = None
@@ -93,8 +99,11 @@ class CacheSettings(BaseSettings):
 class Settings(BaseSettings):
     DB: DatabaseSettings = DatabaseSettings()
     API: APISettings = APISettings()
+    COINDESK: CoindeskSettings = CoindeskSettings()
 
     KAFKA: KafkaProducerSettings
+
+    model_config = SettingsConfigDict(env_file=".env", env_nested_delimiter="__", extra="ignore")
 
 
 settings = Settings()

@@ -1,13 +1,11 @@
 from typing import Any, Callable
 
-from pydantic import BaseModel
 import orjson
+from pydantic import BaseModel
 from pydantic_core import to_jsonable_python
 
 
-def orjson_dumper(
-    value: Any, *, default: Callable[[Any], Any] = to_jsonable_python
-) -> str:
+def orjson_dumper(value: Any, *, default: Callable[[Any], Any] = to_jsonable_python) -> str:
     return orjson.dumps(value, default=default).decode()
 
 

@@ -19,6 +19,9 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+black_venv/
+dev_venv/
+.black_venv
 
 # Настройки IDE и редакторов
 .vscode/

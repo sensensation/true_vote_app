@@ -1,5 +1,6 @@
 from typing import Any
 from uuid import UUID
+
 from pydantic import BaseModel, ConfigDict
 
 from app.domain.votes.enums import VoteStatusEnum
