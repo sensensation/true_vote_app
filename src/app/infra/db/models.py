@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Any
 from uuid import UUID, uuid4
 
@@ -38,6 +39,7 @@ class OptionORM(Base):
     __tablename__ = "options"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    room_id: Mapped[int] = mapped_column(ForeignKey("rooms.id"), nullable=False)
     description: Mapped[str] = mapped_column(String(255), nullable=False, comment="Описание варианта голосования")
     is_active: Mapped[bool] = mapped_column(
         Boolean, default=True, nullable=False, comment="Активен ли вариант голосования"
@@ -56,6 +58,7 @@ class VoteORM(Base, TimeMixin):
         nullable=False,
         comment="ID пользователя, который проголосовал",
     )
+    room_id: Mapped[int] = mapped_column(ForeignKey("rooms.id"), nullable=False, comment="ID комнаты голосования")
     option_id: Mapped[int] = mapped_column(
         ForeignKey("options.id"),
         nullable=False,
@@ -71,3 +74,22 @@ class VoteORM(Base, TimeMixin):
     blockchain_txn_id: Mapped[UUID] = mapped_column(nullable=True, comment="ID транзакции в блокчейне")
 
     __table_args__ = (Index("ix_votes_user_id_option_id", "user_id", "option_id"),)
+
+
+class RoomORM(Base):
+    __tablename__ = "rooms"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    room_id: Mapped[UUID] = mapped_column(default=uuid4, unique=True, index=True)
+
+    title: Mapped[str] = mapped_column(String(255), comment="Название/описание комнаты")
+    start_time: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+    end_time: Mapped[datetime] = mapped_column()
+
+    is_closed: Mapped[bool] = mapped_column(default=False, comment="Закрыта ли уже комната?")
+
+    blockchain_room_address: Mapped[str] = mapped_column(
+        String(100),
+        nullable=True,
+        comment="Адрес акаунта в Solana для комнаты.",
+    )
