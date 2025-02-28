@@ -4,6 +4,6 @@ from uuid import UUID
 from app.app_layer.interfaces.services.votes.dto import VoteOutputDTO
 
 
-class AbstractRetrieveVoteService(ABC):
+class AbstractVoteService(ABC):
     @abstractmethod
-    async def process(self, vote_id: UUID) -> VoteOutputDTO: ...
+    async def get(self, vote_id: UUID) -> VoteOutputDTO: ...

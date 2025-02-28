@@ -1,10 +1,10 @@
 from dependency_injector import containers, providers
 
-from app.app_layer.services.vote_retrieve.service import RetrieveVoteService
+from app.app_layer.services.vote.service import VoteService
 from app.config import settings
 from app.infra.db.connection import AlchemyDatabase
-from app.infra.unit_of_work.uow import Uow
 from app.infra.http.initilizer import init_coindesk_client
+from app.infra.unit_of_work.uow import Uow
 
 
 class Container(containers.DeclarativeContainer):
@@ -20,7 +20,7 @@ class Container(containers.DeclarativeContainer):
     )
 
     # app_layer: services
-    retrieve_vote_service = providers.Factory(
-        RetrieveVoteService,
+    vote_service = providers.Factory(
+        VoteService,
         uow=uow,
     )
