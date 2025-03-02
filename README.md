@@ -1,0 +1,1 @@
+Solana powered voting application
