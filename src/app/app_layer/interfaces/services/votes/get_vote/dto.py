@@ -3,7 +3,7 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
-from app.domain.votes.enums import DeviceTypeEnum, VoteStatusEnum
+from app.domain.votes.enums import VoteStatusEnum
 
 
 class VoteOutputDTO(BaseModel):
@@ -12,7 +12,6 @@ class VoteOutputDTO(BaseModel):
     user_id: UUID
     option_id: int
     timestamp: datetime
-    device_type: DeviceTypeEnum
     status: VoteStatusEnum
     blockchain_txn_id: UUID
     timestamp: datetime
@@ -22,5 +21,4 @@ class CreateVoteRequestDTO(BaseModel):
     room_id: UUID
     user_id: UUID
     option_id: int
-    device_type: DeviceTypeEnum
     status: VoteStatusEnum

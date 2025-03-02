@@ -7,7 +7,7 @@ from sqlalchemy.dialects.postgresql import JSONB as DEFAULT_JSONB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy.schema import UniqueConstraint
 
-from app.domain.votes.enums import DeviceTypeEnum, VoteStatusEnum
+from app.domain.votes.enums import VoteStatusEnum
 from app.infra.db.mixins import TimeMixin
 
 metadata = MetaData()
@@ -24,9 +24,8 @@ class UserORM(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     device: Mapped[str | None] = mapped_column(String(64), comment="Устройство", index=True)
-    user_name: Mapped[str | None] = mapped_column(String(64), comment="Имя", index=True)
-    user_last_name: Mapped[str | None] = mapped_column(String(64), comment="Фамилия", index=True)
-    phone: Mapped[str | None] = mapped_column(String(21), comment="Номер телефона", index=True, unique=True)
+    user_name: Mapped[str] = mapped_column(String(64), comment="Имя пользователя", index=True)
+    user_last_name: Mapped[str | None] = mapped_column(String(64), comment="Фамилия пользователя", index=True)
     email: Mapped[str | None] = mapped_column(String(128), comment="Электронная почта")
 
     __table_args__ = (
@@ -62,12 +61,7 @@ class VoteORM(Base, TimeMixin):
     option_id: Mapped[int] = mapped_column(
         ForeignKey("options.id"),
         nullable=False,
-        comment="ID выбора (варианта), за который проголосовали",
-    )
-    device_type: Mapped[DeviceTypeEnum] = mapped_column(
-        String(20),
-        nullable=True,
-        comment="Тип устройства, с которого был отправлен голос",
+        comment="ID выбора (варианта), за который проголосовал пользователь",
     )
     status: Mapped[VoteStatusEnum] = mapped_column(String(20), nullable=False, comment="Статус голоса")
     meta: Mapped[Any] = mapped_column(JSONB, nullable=True, comment="Дополнительные метаданные о голосе")
@@ -81,13 +75,11 @@ class RoomORM(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     room_id: Mapped[UUID] = mapped_column(default=uuid4, unique=True, index=True)
-
-    title: Mapped[str] = mapped_column(String(255), comment="Название/описание комнаты")
+    title: Mapped[str] = mapped_column(String(64), comment="Название комнаты")
+    description: Mapped[str] = mapped_column(String(255), comment="Описание комнаты")
     start_time: Mapped[datetime] = mapped_column(default=datetime.utcnow)
     end_time: Mapped[datetime] = mapped_column()
-
-    is_closed: Mapped[bool] = mapped_column(default=False, comment="Закрыта ли уже комната?")
-
+    is_closed: Mapped[bool] = mapped_column(default=False, comment="Признак завершенности голосования")
     blockchain_room_address: Mapped[str] = mapped_column(
         String(100),
         nullable=True,

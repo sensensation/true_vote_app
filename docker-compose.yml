@@ -27,7 +27,8 @@ services:
     volumes:
       - ./src:/app/code
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:14-alpine
@@ -39,6 +40,11 @@ services:
       - trust_vote_db:/var/lib/postgresql/data
     ports:
       - "8201:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 2
 
 volumes:
    trust_vote_db:

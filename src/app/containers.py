@@ -1,6 +1,7 @@
 from dependency_injector import containers, providers
 
-from app.app_layer.services.vote.service import VoteService
+from app.app_layer.services.votes.create_vote.service import VoteCreateService
+from app.app_layer.services.votes.get_vote.serivce import VoteGetService
 from app.config import settings
 from app.infra.db.connection import AlchemyDatabase
 from app.infra.http.initilizer import init_coindesk_client
@@ -20,7 +21,15 @@ class Container(containers.DeclarativeContainer):
     )
 
     # app_layer: services
-    vote_service = providers.Factory(
-        VoteService,
+    vote_get_service = providers.Factory(
+        VoteGetService,
+        uow=uow,
+    )
+    vote_create_service = providers.Factory(
+        VoteCreateService,
+        uow=uow,
+    )
+    room_create_service = providers.Factory(
+        RoomCreateService,
         uow=uow,
     )

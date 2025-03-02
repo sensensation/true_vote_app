@@ -1,11 +1,4 @@
-from enum import IntEnum, StrEnum
-
-
-class DeviceTypeEnum(StrEnum):
-    ios = "IOS"
-    android = "ANDROID"
-    desktop = "DESKTOP"
-    unknown = "UNKNOWN"
+from enum import IntEnum
 
 
 class VoteStatusEnum(IntEnum):
