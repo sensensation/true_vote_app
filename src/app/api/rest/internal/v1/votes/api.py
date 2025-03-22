@@ -33,7 +33,7 @@ async def create_vote_v1(
     service: VoteCreateService = Depends(Provide[Container.vote_create_service]),
 ) -> VoteOutputDTO:
     try:
-        vote = await service.create(CreateVoteRequestDTO)
+        vote = await service.process(CreateVoteRequestDTO(**data.model_dump()))
     except Exception:
         pass
     return vote

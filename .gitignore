@@ -75,3 +75,4 @@ pip-log.txt
 
 # Celery файлы
 celerybeat-schedule
+.qodo

@@ -12,7 +12,7 @@ class VoteDTO(BaseModel):
     id: int
     user_id: int
     option_id: int
-    device_type: str
+    room_id: int
     status: VoteStatusEnum
-    meta: Any
-    blockchain_txn_id: UUID
+    meta: dict[str, Any] = {}
+    blockchain_txn_id: UUID | None = None

@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from types import TracebackType
 from typing import Self
 
+from app.app_layer.interfaces.repositories.room import AbstractRoomRepository
 from app.app_layer.interfaces.repositories.vote import AbstractVoteRepository
 
 # from app.app_layer.interfaces.repositories.example_repo import AbstractExampleRepository
@@ -12,6 +13,7 @@ class AbcUnitOfWork(ABC):
     # repo_example: AbcRepoExample
 
     vote_repo: AbstractVoteRepository
+    rooms_repo: AbstractRoomRepository
 
     async def __aenter__(self) -> Self:
         return self

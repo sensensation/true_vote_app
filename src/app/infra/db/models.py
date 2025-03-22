@@ -22,7 +22,7 @@ class Base(DeclarativeBase):
 class UserORM(Base):
     __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     device: Mapped[str | None] = mapped_column(String(64), comment="Устройство", index=True)
     user_name: Mapped[str] = mapped_column(String(64), comment="Имя пользователя", index=True)
     user_last_name: Mapped[str | None] = mapped_column(String(64), comment="Фамилия пользователя", index=True)
@@ -38,7 +38,7 @@ class OptionORM(Base):
     __tablename__ = "options"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    room_id: Mapped[int] = mapped_column(ForeignKey("rooms.id"), nullable=False)
+    room_id: Mapped[UUID] = mapped_column(ForeignKey("rooms.id"), nullable=False)
     description: Mapped[str] = mapped_column(String(255), nullable=False, comment="Описание варианта голосования")
     is_active: Mapped[bool] = mapped_column(
         Boolean, default=True, nullable=False, comment="Активен ли вариант голосования"
@@ -51,13 +51,13 @@ class OptionORM(Base):
 class VoteORM(Base, TimeMixin):
     __tablename__ = "votes"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    user_id: Mapped[UUID] = mapped_column(
         ForeignKey("users.id"),
         nullable=False,
         comment="ID пользователя, который проголосовал",
     )
-    room_id: Mapped[int] = mapped_column(ForeignKey("rooms.id"), nullable=False, comment="ID комнаты голосования")
+    room_id: Mapped[UUID] = mapped_column(ForeignKey("rooms.id"), nullable=False, comment="ID комнаты голосования")
     option_id: Mapped[int] = mapped_column(
         ForeignKey("options.id"),
         nullable=False,
@@ -73,8 +73,7 @@ class VoteORM(Base, TimeMixin):
 class RoomORM(Base):
     __tablename__ = "rooms"
 
-    id: Mapped[int] = mapped_column(primary_key=True)
-    room_id: Mapped[UUID] = mapped_column(default=uuid4, unique=True, index=True)
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     title: Mapped[str] = mapped_column(String(64), comment="Название комнаты")
     description: Mapped[str] = mapped_column(String(255), comment="Описание комнаты")
     start_time: Mapped[datetime] = mapped_column(default=datetime.utcnow)
