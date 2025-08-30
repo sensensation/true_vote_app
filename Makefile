@@ -5,15 +5,6 @@ start:
 stop:
 	docker-compose down
 
-# Formatting
-isort:
-	docker-compose up -d app && docker exec -it carts isort .
-
-black:
-	docker-compose up -d app && docker exec -it carts black .
-
-format: isort black
-
 # Linting
 flake8:
 	docker-compose up -d app && docker exec -it carts flake8 .

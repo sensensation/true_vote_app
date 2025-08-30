@@ -1,13 +1,62 @@
-[tool.black]
-line-length = 120
-target-version = ['py311']
-skip-string-normalization = false
+[project]
+name= "true_vote"
+version = "1.0.0"
+description = "true vote service"
+requires-python = ">=3.13,<3.14"
+
+dependencies = [
+    "aiokafka>=0.12.0",
+    "aioprometheus>=23.12.0",
+    "cashews>=7.4.1",
+    "click>=8.1,<8.2",
+    "dependency-injector>=4.48.1",
+    "fastapi>=0.116.1",
+    "faust-streaming>=0.11,<0.12",
+    "jsonpickle>=4.1.1",
+    "orjson>=3.11.3",
+    "pre-commit>=4.3.0",
+    "pydantic>=2.11.7",
+    "pydantic-settings>=2.10.1",
+    "ruff==0.12.11",
+    "sqlalchemy>=2.0.43",
+    "typer>=0.16.1",
+    "uvicorn>=0.35.0",
+]
 
 [tool.ruff]
 line-length = 120
-target-version = "py311"
-select = ["ALL"]
-ignore = ["RUF001", "RUF002", "RUF100", "D100", "D107", "D203", "D213", "ANN401"]
+target-version = "py313"
+fix = true
+show-fixes = true
+force-exclude = true
 
-[tool.ruff.flake8-annotations]
-allow-star-arg-any = true
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+  "RUF001","RUF002","RUF100","D100","D107","D203","D213","ANN401",
+  "D101","D102","D103","D104","D105", "D102",
+  "TD002","TD003","FIX002", "F821", "ERA001",
+  "INP001", "G004", "COM812",
+]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+norecursedirs = ['.*', '__pycache__', 'venv']
+
+[tool.mypy]
+python_version = "3.13"
+exclude = ["venv", ".venv", "tests"]
+
+[tool.ruff.lint.per-file-ignores]
+"app/api/rest/internal/v1/rooms/api.py" = ["ALL"]
+"alembic/env.py" = ["ALL"]
+"tests/environment/conftests.py" = ["ERA001"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+combine-as-imports = true
+force-sort-within-sections = true

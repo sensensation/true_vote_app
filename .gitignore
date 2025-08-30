@@ -1,7 +1,71 @@
-# Основные файлы и папки Python
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+dev_venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific
+.mypy_cache/
+.demos/
+.anchor/
+target/
+**/*.rs.bk
+node_modules/
+test-ledger/
+.yarn/
+
+# Backend specific
+backend/.env
+backend/.env_defaults
+
+# Frontend specific
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/build/
+frontend/dist/
+frontend/.next/
+frontend/out/
 
 # Логи и отладочная информация
 *.log
@@ -14,18 +78,12 @@ __pycache__/
 *.sqlite
 
 # Папки среды виртуального окружения
-env/
-venv/
-ENV/
 env.bak/
 venv.bak/
 black_venv/
-dev_venv/
 .black_venv
 
 # Настройки IDE и редакторов
-.vscode/
-.idea/
 *.sublime-project
 *.sublime-workspace
 
@@ -37,27 +95,16 @@ Thumbs.db
 *.env
 docker-compose.override.yml
 
-# Виртуальные окружения (Pipenv, Poetry)
-.Python
-Pipfile.lock
-poetry.lock
-
 # Кеши и временные файлы
-*.egg-info/
-.eggs/
+*.cover
+.hypothesis/
 .cache/
 .tox/
 .coverage
-*.cover
-.hypothesis/
-dist/
-build/
-site/
 
 # Файлы тестирования
 .pytest_cache/
 htmlcov/
-demos/
 
 # Pyre - статический анализатор типов для Python
 .pyre/
@@ -65,11 +112,7 @@ demos/
 # Pytype - статический анализатор типов для Python
 .pytype/
 
-# MyPy - статический анализатор типов для Python
-.mypy_cache/
-
 # Пакеты и зависимости Python
-*.egg
 *.wheel
 pip-log.txt
 
