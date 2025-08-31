@@ -1,121 +1,52 @@
-# Python
+# ---------- Python ----------
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
 
-# Virtual Environment
-venv/
-ENV/
-env/
-dev_venv/
+# Envs
+.venv*/ 
+venv*/ 
+env*/ 
+ENV*/ 
+dev_venv*/ 
 
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
+# Build/dist
+build/ dist/ wheels/
+.eggs/ *.egg-info/ .installed.cfg
 
-# OS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+# Caches & tests
+.mypy_cache/ .pytest_cache/ .ruff_cache/
+.hypothesis/ .tox/ .cache/
+.coverage htmlcov/
 
-# Project specific
-.mypy_cache/
-.demos/
-.anchor/
-target/
-**/*.rs.bk
-node_modules/
-test-ledger/
-.yarn/
-
-# Backend specific
-backend/.env
-backend/.env_defaults
-
-# Frontend specific
-frontend/node_modules/
-frontend/.env
-frontend/.env.local
-frontend/.env.development.local
-frontend/.env.test.local
-frontend/.env.production.local
-frontend/build/
-frontend/dist/
-frontend/.next/
-frontend/out/
-
-# Логи и отладочная информация
+# Logs & local DBs
 *.log
-*.pot
-*.pyc
-*.pyo
-*.pyd
-*.sqlite3
-*.db
-*.sqlite
+*.sqlite* *.db
 
-# Папки среды виртуального окружения
-env.bak/
-venv.bak/
-black_venv/
-.black_venv
-
-# Настройки IDE и редакторов
-*.sublime-project
-*.sublime-workspace
-
-# Конфигурационные файлы системы
+# Editors / OS
+.idea/ .vscode/
+*.swp *.swo
 .DS_Store
-Thumbs.db
 
-# Файлы для работы с Docker
+# Docker/local config
 *.env
+!.env.example
+!.env.sample
 docker-compose.override.yml
 
-# Кеши и временные файлы
-*.cover
-.hypothesis/
-.cache/
-.tox/
-.coverage
+# ---------- Solana / Anchor (scoped) ----------
+app/solana_programs/**/.anchor/
+app/solana_programs/**/target/
+app/solana_programs/**/node_modules/
+app/solana_programs/**/test-ledger/
+app/solana_programs/**/.yarn/
+app/solana_programs/**/*-keypair.json   # ключи программ НЕ коммитим
+**/*.rs.bk
+!app/solana_programs/**/Cargo.lock
+**/Cargo.lock
+!app/solana_programs/idl/**/*.json
 
-# Файлы тестирования
-.pytest_cache/
-htmlcov/
-
-# Pyre - статический анализатор типов для Python
-.pyre/
-
-# Pytype - статический анализатор типов для Python
-.pytype/
-
-# Пакеты и зависимости Python
-*.wheel
-pip-log.txt
-
-# Celery файлы
-celerybeat-schedule
-.qodo
+frontend/node_modules/
+frontend/.next/ frontend/dist/ frontend/build/ frontend/out/
+frontend/.env* 
+!frontend/.env.example

@@ -1,6 +1,8 @@
 #!/bin/sh
-# entrypoint.sh
+set -euo pipefail
 
-alembic upgrade head
+cd /opt/app
+export PYTHONPATH=/opt/app
 
-python -m typer app.main run start-server --app
+uv run alembic upgrade head
+exec uv run python -m typer manage run-server

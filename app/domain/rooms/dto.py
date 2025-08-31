@@ -17,7 +17,8 @@ class RoomDTO(BaseModel):
     blockchain_room_address: str | None = None
 
     @field_validator("end_time")
-    def validate_end_time(self, end_time: datetime, info: dict[str, Any]) -> datetime:
+    @classmethod
+    def validate_end_time(cls, end_time: datetime, info: dict[str, Any]) -> datetime:
         """Проверяет, что время завершения не раньше времени начала."""
         start_time = info.data.get("start_time")
         if start_time and end_time < start_time:
